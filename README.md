@@ -4,7 +4,7 @@ I update this daily with problems I solve.
 ## 🟢 Easy Problems
 | # | Problem | Link | Notes |
 |---|---------|------|-------|
-
+Reverse Array https://www.geeksforgeeks.org/dsa/program-to-reverse-an-array/
 
 ## 🟡 Medium Problems
 | # | Problem | Link | Notes |
