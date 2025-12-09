@@ -1,0 +1,37 @@
+// Problem: Largest Number
+// Link: https://leetcode.com/problems/largest-number/
+// Difficulty: Medium
+// Time Complexity: O(n log n)   -> sorting the array of strings
+// Space Complexity: O(n)        -> extra array to store string versions of numbers
+
+import java.util.*;
+
+class Solution {
+    public String largestNumber(int[] nums) {
+        // Step 1: Convert all integers to strings
+        // Reason: We need to compare numbers based on concatenation (e.g., "9" + "34" vs "34" + "9")
+        String[] arr = new String[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            arr[i] = String.valueOf(nums[i]);
+        }
+
+        // Step 2: Sort strings in custom order
+        // Reason: For two numbers a and b, compare which combination forms a bigger number: (b+a) vs (a+b)
+        // Example: a=3, b=30 -> "330" vs "303" -> "330" is bigger, so 3 comes before 30
+        Arrays.sort(arr, (a, b) -> (b + a).compareTo(a + b));
+
+        // Step 3: Handle edge case where all numbers are 0
+        // Reason: If the largest element after sorting is "0", the result must be "0"
+        if (arr[0].equals("0")) return "0";
+
+        // Step 4: Concatenate sorted strings to form the largest number
+        StringBuilder ab = new StringBuilder();
+        for (String s : arr) {
+            ab.append(s);
+        }
+
+        // Step 5: Return the final result
+        return ab.toString();
+    }
+}
+    
