@@ -1,0 +1,38 @@
+// Problem: Check if Array is Sorted and Rotated
+// Link: https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/
+// Difficulty: Easy
+// Time Complexity: O(n)  -> We scan the array once
+// Space Complexity: O(1) -> No extra space used
+
+class Solution {
+    public boolean check(int[] nums) {
+        
+        /*
+         * We need to check if the array is:
+         * 1) Sorted in ascending order, OR
+         * 2) A rotated version of a sorted array.
+         *
+         * Example valid arrays:
+         *  - [1,2,3,4,5] (already sorted)
+         *  - [3,4,5,1,2] (sorted, then rotated)
+         *
+         * Key Observation:
+         * In a valid sorted-rotated array, there can be AT MOST one position
+         * where nums[i] > nums[i+1]. This indicates the rotation point.
+         * If this happens more than once, the array is NOT sorted-rotated.
+         */
+        
+        int count = 0;
+        int n = nums.length;
+
+        for (int i = 0; i < n; i++) {
+            // Using (i+1)%n to compare last element with first element in a circular way
+            if (nums[i] > nums[(i + 1) % n]) {
+                count++;
+            }
+        }
+
+        // Valid only if there is at most one break in the sorted order
+        return count <= 1;
+    }
+}
