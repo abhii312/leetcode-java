@@ -1,0 +1,30 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+
+        // 'left' keeps track of the index of the last unique element
+        int left = 0;
+
+        // 'right' is used to traverse the array
+        int right = 1;
+
+        // Traverse until 'right' reaches the end of the array
+        while (right < nums.length) {
+
+            // If a new unique element is found
+            if (nums[left] != nums[right]) {
+
+                // Place the new unique element next to the last unique element
+                nums[left + 1] = nums[right];
+
+                // Move 'left' forward since we added a unique element
+                left++;
+            }
+
+            // Always move 'right' forward to continue scanning
+            right++;
+        }
+
+        // Number of unique elements = left index + 1
+        return left + 1;
+    }
+}
