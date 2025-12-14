@@ -1,0 +1,30 @@
+class Solution {
+    public void moveZeroes(int[] nums) {
+
+        int n = nums.length;
+
+        // 'left' tracks the position to place the next non-zero element
+        int left = 0;
+
+        // 'i' is used to traverse the array
+        int i = 0;
+
+        while (i < n) {
+
+            // If current element is non-zero
+            if (nums[i] != 0) {
+
+                // Swap current element with the element at 'left'
+                int temp = nums[left];
+                nums[left] = nums[i];
+                nums[i] = temp;
+
+                // Move 'left' to the next position
+                left++;
+            }
+
+            // Always move forward
+            i++;
+        }
+    }
+}
