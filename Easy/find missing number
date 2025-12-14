@@ -1,0 +1,46 @@
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution {
+
+    // -------------------- APPROACH 1: SUM FORMULA --------------------
+    // Optimal solution using mathematical formula
+    public int missingNumberUsingSum(int[] nums) {
+
+        int n = nums.length;
+
+        // Expected sum of numbers from 0 to n
+        int expectedSum = n * (n + 1) / 2;
+
+        // Calculate actual sum of array elements
+        int actualSum = 0;
+        for (int num : nums) {
+            actualSum += num;
+        }
+
+        // Missing number is the difference
+        return expectedSum - actualSum;
+    }
+
+    // -------------------- APPROACH 2: HASHMAP --------------------
+    // Uses extra space to track existing numbers
+    public int missingNumberUsingMap(int[] nums) {
+
+        int n = nums.length;
+        Map<Integer, Integer> map = new HashMap<>();
+
+        // Store all numbers present in the array
+        for (int i = 0; i < n; i++) {
+            map.put(nums[i], 1);
+        }
+
+        // Check which number from 0 to n is missing
+        for (int i = 0; i <= n; i++) {
+            if (!map.containsKey(i)) {
+                return i;
+            }
+        }
+
+        return -1; // fallback (never reached for valid input)
+    }
+}
