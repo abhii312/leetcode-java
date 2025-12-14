@@ -1,0 +1,29 @@
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+
+        // Stores the length of the current consecutive 1s sequence
+        int count = 0;
+
+        // Stores the maximum length found so far
+        int max = 0;
+
+        // Traverse the array once
+        for (int i = 0; i < nums.length; i++) {
+
+            // If current element is 1, extend the current sequence
+            if (nums[i] == 1) {
+                count++;
+
+                // Update maximum if current count is greater
+                max = Math.max(max, count);
+            }
+            // If current element is 0, reset the current sequence
+            else {
+                count = 0;
+            }
+        }
+
+        // Return the maximum consecutive 1s
+        return max;
+    }
+}
