@@ -1,0 +1,32 @@
+class Solution {
+    public void rotate(int[] nums, int k) {
+
+        int n = nums.length;
+
+        // Handle cases where k >= n
+        int m = k % n;
+
+        // Step 1: Reverse the entire array
+        reverse(nums, 0, n - 1);
+
+        // Step 2: Reverse the first 'm' elements
+        reverse(nums, 0, m - 1);
+
+        // Step 3: Reverse the remaining elements
+        reverse(nums, m, n - 1);
+    }
+
+    // Helper method to reverse elements in a given range
+    public void reverse(int[] arr, int left, int right) {
+
+        // Swap elements until the pointers meet
+        while (left < right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+
+            left++;
+            right--;
+        }
+    }
+}
