@@ -22,7 +22,7 @@ class Solution {
                 count = 0;
             }
         }
-
+//
         // Return the maximum consecutive 1s
         return max;
     }
