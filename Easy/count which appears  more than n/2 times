@@ -1,0 +1,44 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+
+        // Stores the potential majority element
+        int candidate = 0;
+
+        // Counter to track votes for the candidate
+        int count = 0;
+
+        // Traverse through the array
+        for (int num : nums) {
+
+            // If count is zero, pick a new candidate
+            if (count == 0) {
+                candidate = num;
+            }
+
+            // If current number matches candidate, increment count
+            if (candidate == num) {
+                count++;
+            }
+            // Otherwise, decrement count
+            else {
+                count--;
+            }
+        }
+
+        // The final candidate is the majority element
+        return candidate;
+    }
+}
+🧠 Step-by-Step Dry Run
+Input:
+text
+Copy code
+nums = [2,2,1,1,1,2,2]
+num	candidate	count	Explanation
+2	2	1	new candidate
+2	2	2	same → ++
+1	2	1	different → --
+1	2	0	different → --
+1	1	1	new candidate
+2	1	0	different → --
+2	2	1	new candidate
