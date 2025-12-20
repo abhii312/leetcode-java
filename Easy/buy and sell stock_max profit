@@ -1,0 +1,66 @@
+🧠 Approaches Covered
+
+Approach 1: Minimum Price Tracking (Optimal – Most Recommended)
+
+Approach 2: Two Pointers (Conceptual Sliding Window)
+
+✅ Combined Code (Both Approaches)
+class Solution {
+
+    // -------------------- APPROACH 1: MIN PRICE TRACKING --------------------
+    // Optimal and most commonly expected solution
+    public int maxProfitUsingMinPrice(int[] prices) {
+
+        // Minimum price seen so far
+        int minPrice = Integer.MAX_VALUE;
+
+        // Maximum profit achievable
+        int maxProfit = 0;
+
+        // Traverse prices
+        for (int i = 0; i < prices.length; i++) {
+
+            // Update minimum price if lower price is found
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+
+            // Calculate profit if sold today
+            int profit = prices[i] - minPrice;
+
+            // Update maximum profit
+            maxProfit = Math.max(maxProfit, profit);
+        }
+
+        return maxProfit;
+    }
+
+    // -------------------- APPROACH 2: TWO POINTERS --------------------
+    // Uses left (buy) and right (sell) pointers
+    public int maxProfitUsingTwoPointers(int[] prices) {
+
+        int left = 0;   // Buy day
+        int right = 1;  // Sell day
+        int maxProfit = 0;
+
+        int n = prices.length;
+
+        // Traverse while sell pointer is within bounds
+        while (right < n) {
+
+            // If selling price is higher, calculate profit
+            if (prices[right] > prices[left]) {
+                maxProfit = Math.max(maxProfit, prices[right] - prices[left]);
+            }
+            // If selling price is lower, move buy pointer
+            else {
+                left = right;
+            }
+
+            // Move sell pointer
+            right++;
+        }
+
+        return maxProfit;
+    }
+}
