@@ -1,0 +1,64 @@
+
+/**
+ * LeetCode 128 — Longest Consecutive Sequence
+ *
+ * Problem:
+ * Given an unsorted array of integers, return the length of the longest consecutive elements sequence.
+ * The algorithm must run in O(n) time.
+ *
+ * Core idea (HashSet & sequence starts):
+ * - Insert all numbers into a HashSet for O(1) average-time membership checks.
+ * - A number `x` is the *start* of a consecutive sequence if there is no `x - 1` in the set.
+ * while numbers exist in the set. *   Only start counting from such "starts" to avoid recounting internal elements.
+ * - Track the maximum length encountered.
+ *
+ * Why this is O(n):
+ * - Each number is inserted once (O(n)).
+ * - Each number is visited at most twice: once to check if it’s a start, and at most once as part of a growing chain,
+ *   because we only expand sequences from true starts.
+ *
+ * Time Complexity: O(n) average case
+ * Space Complexity: O(n) for the set
+ *
+ * Edge cases:
+ * - Empty array → answer is 0.
+ * - All duplicates → sequences are length 1.
+ * - Negative numbers and mixed order handled naturally.
+ */
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        // Guard: empty input => no consecutive sequence
+        if (nums == null || nums.length == 0) return 0;
+
+        // HashSet enables O(1) average membership checks.
+        // We store all numbers to support quick "is next value present?" queries.
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        int max = 0; // Tracks the best (longest) sequence length found so far.
+
+        // Iterate through unique values only (via the set).
+        for (int num : set) {
+            // A sequence start is a number for which (num - 1) does NOT exist.
+            // This ensures each sequence is only counted once from its smallest element.
+            if (!set.contains(num - 1)) {
+                int curr = num;   // current value we are extending
+                int count = 1;    // current sequence length (starts at 1 with `num`)
+
+                // Expand the sequence forward: num, num+1, num+2, ...
+                while (set.contains(curr + 1)) {
+                    curr++;
+                    count++;
+                }
+
+                // Update global maximum if this sequence is longer.
+                max = Math.max(max, count);
+            }
+        }
+
+        return max;
+    }
+}
+
