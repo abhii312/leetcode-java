@@ -1,0 +1,83 @@
+
+/**
+ * LeetCode 31 — Next Permutation
+ *
+ * Problem:
+ * Given an array of integers representing a permutation, transform it into the next lexicographically
+ * greater permutation. If such permutation doesn't exist (i.e., it's the highest), rearrange it to the lowest.
+ *
+ * Approach (classic in-place algorithm):
+ * 1) Scan from right to left to find the first index `index` such that nums[index] < nums[index + 1].
+ *    - This identifies the "pivot" where an increasing suffix begins. If none is found, the array is in from the far right to find the first element greater than nums[index] (rightmost *    - This identifies the "pivot" where an increasing suffix begins. If none is found, the array is in
+ *    successor), swap them.
+ * 3) Reverse the suffix starting at index + 1 to the end to make it the smallest possible (ascending order),
+ *    ensuring the next lexicographical order.
+ *
+ * Correctness intuition:
+ * - The suffix to the right of `index` is monotonically non-increasing.
+ * - Swapping the pivot with the next larger element from the right increases the permutation minimally.
+ * - Reversing the suffix then yields the lowest ordering of that suffix, thus the immediate next permutation.
+ *
+ * Time Complexity: O(n)  — single right-to-left scan, another right-to-left search, and one reverse.
+ * Space Complexity: O(1) — in-place operations, no extra data structures.
+ *
+ * Edge cases:
+ * - Already largest (strictly decreasing): reverse all to get smallest.
+ * - All equal elements: reversing still yields the same array.
+ * - Length 0 or 1: no change (method handles naturally).
+ */
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length;
+
+        // Step 1: Find the pivot (first element from the right that breaks non-increasing order).
+        // Example: [1, 3, 5, 4, 2] → pivot at index=1 (3 < 5).
+        int index = -1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i] < nums[i + 1]) {
+                index = i;      // store pivot index
+                break;          // stop at the first such pair from the right
+            }
+        }
+
+        // If no pivot found, the array is in descending order:
+        // e.g., [5,4,3,2,1] → reverse to [1,2,3,4,5].
+        if (index == -1) {
+            rev(nums, 0, n - 1);
+            return; // done
+        }
+
+        // Step 2: Find the rightmost element greater than nums[index] and swap.
+        // Because the suffix is non-increasing, scanning from the end ensures we get the next larger
+        // element that yields the minimal increase.
+        for (int i = n - 1; i > index; i--) {
+            if (nums[i] > nums[index]) {
+                // Swap nums[i] and nums[index]
+                int temp = nums[i];
+                nums[i] = nums[index];
+                nums[index] = temp;
+                break; // only one swap needed
+            }
+        }
+
+        // Step 3: Reverse the suffix to make it smallest (ascending).
+        // After swapping, the suffix is still non-increasing; reversing sorts it ascending.
+        rev(nums, index + 1, n - 1);
+    }
+
+    /**
+     * In-place reverse of subarray [start, end].
+     * Typical two-pointer reversal.
+     */
+    public void rev(int arr[], int start, int end) {
+        while (start < end) {
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
+``
+ *      descending order (largest permutation) → reverse the whole array to get the smallest permutation.
